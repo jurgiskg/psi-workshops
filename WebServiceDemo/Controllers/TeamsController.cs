@@ -5,6 +5,7 @@ using WebServiceDemo.Repositories;
 
 namespace WebServiceDemo.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
     public class TeamsController : Controller
     {
@@ -15,10 +16,17 @@ namespace WebServiceDemo.Controllers
             _teamRepo = teamRepo;
         }
 
-        [HttpGet]
         public IEnumerable<Team> GetTeams()
         {
             return _teamRepo.GetTeams();
+        }
+
+        [Route("{id}")]
+        public IActionResult GetTeam(int id)
+        {
+            var team = _teamRepo.GetTeam(id);
+
+            return team != null ? Ok(team) : NotFound();
         }
     }
 }
