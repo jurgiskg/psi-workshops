@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace WebServiceDemo.Entities
 {
@@ -6,7 +7,7 @@ namespace WebServiceDemo.Entities
     {
         public int TeamId { get; set; }
         public string Name { get; set; }
-        public IEnumerable Players { get; set; }
+        public IEnumerable<Player> Players { get; set; }
         public Person Coach { get; set; }
     }
 }

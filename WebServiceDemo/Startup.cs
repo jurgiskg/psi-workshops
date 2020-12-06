@@ -22,6 +22,7 @@ namespace WebServiceDemo
         {
             services.AddControllers();
             services.AddScoped<ITeamRepository, DummyTeamRepository>();
+            services.AddScoped<IPlayerRepository, DummyPlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using WebServiceDemo.Entities;
+using WebServiceDemo.Repositories;
 
 namespace WebServiceDemo.Controllers
 {
@@ -7,10 +10,26 @@ namespace WebServiceDemo.Controllers
     [Route("[controller]")]
     public class PlayersController : Controller
     {
-        [Route("{id}")]
-        public Player GetPlayer()
+        private readonly IPlayerRepository _playerRepo;
+
+        public PlayersController(IPlayerRepository playerRepo)
         {
-            return new Player { FirstName = "Vaclovas" };
+            _playerRepo = playerRepo;
+        }
+
+        [HttpGet]
+        public IEnumerable<Player> GetPlayers()
+        {
+            return _playerRepo.GetPlayers();
+        }
+
+        [HttpGet]
+        [Route("{playerId}")]
+        public IActionResult GetPlayer(int playerId)
+        {
+            var player = _playerRepo.GetPlayer(playerId);
+
+            return player != null ? Ok(player) : NotFound();
         }
     }
 }

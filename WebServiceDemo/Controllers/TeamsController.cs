@@ -16,15 +16,17 @@ namespace WebServiceDemo.Controllers
             _teamRepo = teamRepo;
         }
 
+        [HttpGet]
         public IEnumerable<Team> GetTeams()
         {
             return _teamRepo.GetTeams();
         }
 
-        [Route("{id}")]
-        public IActionResult GetTeam(int id)
+        [HttpGet]
+        [Route("{teamId}")]
+        public IActionResult GetTeam(int teamId)
         {
-            var team = _teamRepo.GetTeam(id);
+            var team = _teamRepo.GetTeam(teamId);
 
             return team != null ? Ok(team) : NotFound();
         }
