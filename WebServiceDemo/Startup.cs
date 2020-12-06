@@ -1,8 +1,10 @@
+using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebServiceDemo.GraphQL;
 using WebServiceDemo.Helpers;
 using WebServiceDemo.Repositories;
 
@@ -20,9 +22,11 @@ namespace WebServiceDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddScoped<ITeamRepository, DummyTeamRepository>();
             services.AddScoped<IPlayerRepository, DummyPlayerRepository>();
+            services.AddControllers();
+            services.AddGraphQLServer()
+                .AddQueryType<Query>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,9 +44,12 @@ namespace WebServiceDemo
 
             app.UseAuthorization();
 
+            app.UsePlayground();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGraphQL();
             });
         }
     }
