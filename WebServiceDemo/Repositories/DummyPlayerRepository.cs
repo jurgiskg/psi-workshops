@@ -17,7 +17,7 @@ namespace WebServiceDemo.Repositories
             return player;
         }
 
-        public IEnumerable<Player> GetPlayers(string firstName, string lastName)
+        public IEnumerable<Player> GetPlayers(string firstName, string lastName, int skip, int take)
         {
             Func<Player, bool> filter = (Player p) =>
             {
@@ -26,9 +26,19 @@ namespace WebServiceDemo.Repositories
                 return firstNameClause && lastNameClause;
             };
 
+            //dirty hack, only for demo purposes
+            if (skip == -1 && take == -1)
+            {
+                return DummyDataStore.Teams
+                    .SelectMany(p => p.Players)
+                    .Where(filter);
+            }
+
             return DummyDataStore.Teams
                 .SelectMany(p => p.Players)
-                .Where(filter);
+                .Where(filter)
+                .Skip(skip)
+                .Take(take);
         }
     }
 }
