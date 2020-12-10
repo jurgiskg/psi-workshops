@@ -26,6 +26,7 @@ namespace WebServiceDemo
             services.AddScoped<IPlayerRepository, DummyPlayerRepository>();
             services.AddControllers();
             services.AddGraphQLServer()
+                .AddFiltering()
                 .AddQueryType<Query>();
         }
 

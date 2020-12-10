@@ -7,7 +7,7 @@ namespace WebServiceDemo.Repositories
 {
     public interface IPlayerRepository
     {
-        public IEnumerable<Player> GetPlayers();
+        public IEnumerable<Player> GetPlayers(string firstName, string lastName);
         public Player GetPlayer(int playerId);
     }
 }

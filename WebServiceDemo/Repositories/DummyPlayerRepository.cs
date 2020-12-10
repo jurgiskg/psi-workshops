@@ -17,9 +17,18 @@ namespace WebServiceDemo.Repositories
             return player;
         }
 
-        public IEnumerable<Player> GetPlayers()
+        public IEnumerable<Player> GetPlayers(string firstName, string lastName)
         {
-            return DummyDataStore.Teams.SelectMany(p => p.Players);
+            Func<Player, bool> filter = (Player p) =>
+            {
+                var firstNameClause = firstName == null ? true : p.FirstName.Contains(firstName);
+                var lastNameClause = lastName == null ? true : p.LastName.Contains(lastName);
+                return firstNameClause && lastNameClause;
+            };
+
+            return DummyDataStore.Teams
+                .SelectMany(p => p.Players)
+                .Where(filter);
         }
     }
 }

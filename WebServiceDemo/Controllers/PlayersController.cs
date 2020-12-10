@@ -18,9 +18,9 @@ namespace WebServiceDemo.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Player> GetPlayers()
+        public IEnumerable<Player> GetPlayers([FromQuery] string firstName, [FromQuery] string lastName)
         {
-            return _playerRepo.GetPlayers();
+            return _playerRepo.GetPlayers(firstName, lastName);
         }
 
         [HttpGet]
